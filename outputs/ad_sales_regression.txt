@@ -1,0 +1,27 @@
+                            OLS Regression Results                            
+==============================================================================
+Dep. Variable:          sales_revenue   R-squared:                       0.991
+Model:                            OLS   Adj. R-squared:                  0.990
+Method:                 Least Squares   F-statistic:                     1422.
+Date:                Mon, 17 Nov 2025   Prob (F-statistic):           1.14e-14
+Time:                        20:29:24   Log-Likelihood:                -75.904
+No. Observations:                  15   AIC:                             155.8
+Df Residuals:                      13   BIC:                             157.2
+Df Model:                           1                                         
+Covariance Type:            nonrobust                                         
+==============================================================================
+                 coef    std err          t      P>|t|      [0.025      0.975]
+------------------------------------------------------------------------------
+const        362.4949     27.586     13.141      0.000     302.899     422.090
+ad_spend       1.7158      0.045     37.714      0.000       1.617       1.814
+==============================================================================
+Omnibus:                        2.726   Durbin-Watson:                   1.846
+Prob(Omnibus):                  0.256   Jarque-Bera (JB):                1.076
+Skew:                           0.626   Prob(JB):                        0.584
+Kurtosis:                       3.394   Cond. No.                     1.58e+03
+==============================================================================
+
+Notes:
+[1] Standard Errors assume that the covariance matrix of the errors is correctly specified.
+[2] The condition number is large, 1.58e+03. This might indicate that there are
+strong multicollinearity or other numerical problems.
