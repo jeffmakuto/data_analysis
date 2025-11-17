@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Collected Records — Static Frontend</title>
+    <style>
+      body { font-family: Arial, sans-serif; margin: 2rem; }
+      table { border-collapse: collapse; width: 100%; max-width: 1000px }
+      th, td { border: 1px solid #ccc; padding: 8px; text-align: left }
+      th { background: #f3f3f3 }
+    </style>
+  </head>
+  <body>
+    <h1>Collected Records</h1>
+    <p><a href="index.html">Back to upload</a></p>
+    <div id="recordsContainer">Loading records...</div>
+
+    <script>
+      // Configure to your backend
+      const API_BASE = '';
+
+      async function loadRecords(){
+        if (!API_BASE){
+          document.getElementById('recordsContainer').innerText = 'API_BASE not set. Edit docs/records.html and set API_BASE to your backend URL.';
+          return;
+        }
+        try{
+          const res = await fetch(API_BASE + '/api/records');
+          if(!res.ok){
+            document.getElementById('recordsContainer').innerText = 'Failed to fetch records: ' + res.statusText;
+            return;
+          }
+          const records = await res.json();
+          if(!records.length){
+            document.getElementById('recordsContainer').innerText = 'No records found.';
+            return;
+          }
+          let html = '<table><thead><tr><th>ID</th><th>Filename</th><th>Uploaded At</th><th>Patient ID</th><th>Procedure</th><th>Amount</th><th>Date of Service</th><th>Confidence</th><th>Consent</th><th>Notes</th></tr></thead><tbody>';
+          for(const r of records){
+            html += `<tr><td>${r.id}</td><td>${r.filename}</td><td>${r.uploaded_at}</td><td>${r.patient_id}</td><td>${r.procedure_code}</td><td>${r.amount_claimed}</td><td>${r.date_of_service}</td><td>${r.extraction_confidence}</td><td>${r.consent? 'Yes':'No'}</td><td>${r.notes||''}</td></tr>`;
+          }
+          html += '</tbody></table>';
+          document.getElementById('recordsContainer').innerHTML = html;
+        }catch(err){
+          document.getElementById('recordsContainer').innerText = 'Error: ' + err.message;
+        }
+      }
+      loadRecords();
+    </script>
+  </body>
+</html>

@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Preauthorization Data Collector (Prototype)</title>
+    <style>
+      body { font-family: Arial, sans-serif; margin: 2rem; }
+      label { display:block; margin-top: .5rem }
+      input, textarea { width: 100%; max-width: 600px }
+      .btn { margin-top: 1rem }
+    </style>
+  </head>
+  <body>
+    <h1>Preauthorization Data Collector — Prototype</h1>
+    <p>This prototype accepts a claim document (PDF/image) and collects minimal metadata. Consent is required.</p>
+    <form action="/upload" method="post" enctype="multipart/form-data">
+      <label for="document">Document (PDF / image)</label>
+      <input type="file" id="document" name="document" accept=".pdf,image/*" required>
+
+      <label for="notes">Notes (optional)</label>
+      <textarea id="notes" name="notes" rows="3"></textarea>
+
+      <label><input type="checkbox" name="consent"> I consent to the processing of this document for research and prototype purposes.</label>
+
+      <button class="btn" type="submit">Upload & Process</button>
+    </form>
+
+    <p><a href="/records">View collected records</a> — <a href="/export/csv">Export CSV</a> — <a href="/export/json">Export JSON</a></p>
+  </body>
+</html>

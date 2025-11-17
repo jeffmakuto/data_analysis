@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Preauthorization Data Collector — Static Frontend</title>
+    <style>
+      body { font-family: Arial, sans-serif; margin: 2rem; }
+      label { display:block; margin-top: .5rem }
+      input, textarea { width: 100%; max-width: 600px }
+      .btn { margin-top: 1rem }
+      .note { color: #555; font-size: 0.9rem }
+    </style>
+  </head>
+  <body>
+    <h1>Preauthorization Data Collector — Static Frontend</h1>
+    <p class="note">This static frontend is suitable for GitHub Pages. It submits to an API endpoint. Set <code>API_BASE</code> below to the deployed backend URL (e.g., https://my-backend.example).</p>
+
+    <form id="uploadForm">
+      <label for="document">Document (PDF / image / docx)</label>
+      <input type="file" id="document" name="document" accept=".pdf,.doc,.docx,.epub,.gdoc,.odt,.ott,.rtf,image/*" required />
+
+      <label for="notes">Notes (optional)</label>
+      <textarea id="notes" name="notes" rows="3"></textarea>
+
+      <label><input id="consent" type="checkbox" name="consent"> I consent to the processing of this document for research and prototype purposes.</label>
+
+      <button class="btn" type="submit">Upload & Process</button>
+    </form>
+
+    <p><a href="records.html">View collected records</a></p>
+
+    <script>
+      // Configure this to your backend once deployed
+      const API_BASE = '';
+
+      const form = document.getElementById('uploadForm');
+      form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        if (!API_BASE) {
+          alert('API_BASE not set. Please edit docs/index.html and set the API_BASE variable to your backend URL.');
+          return;
+        }
+        const fileInput = document.getElementById('document');
+        const consent = document.getElementById('consent').checked;
+        if (!consent) { alert('Consent required'); return; }
+        const notes = document.getElementById('notes').value;
+        const formData = new FormData();
+        formData.append('document', fileInput.files[0]);
+        formData.append('notes', notes);
+        if (consent) formData.append('consent','on');
+
+        try {
+          const res = await fetch(API_BASE + '/upload', { method: 'POST', body: formData });
+          if (res.ok) {
+            alert('Uploaded successfully');
+            window.location.href = 'records.html';
+          } else {
+            const text = await res.text();
+            alert('Upload failed: ' + text);
+          }
+        } catch (err) {
+          alert('Upload error: ' + err.message);
+        }
+      });
+    </script>
+  </body>
+</html>

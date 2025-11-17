@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Collected Records</title>
+    <style>
+      body { font-family: Arial, sans-serif; margin: 2rem; }
+      table { border-collapse: collapse; width: 100%; max-width: 1000px }
+      th, td { border: 1px solid #ccc; padding: 8px; text-align: left }
+      th { background: #f3f3f3 }
+    </style>
+  </head>
+  <body>
+    <h1>Collected Records</h1>
+    <p><a href="/">Back to upload</a> — <a href="/export/csv">Export CSV</a> — <a href="/export/json">Export JSON</a></p>
+    <table>
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Filename</th>
+          <th>Uploaded At</th>
+          <th>Patient ID</th>
+          <th>Procedure</th>
+          <th>Amount</th>
+          <th>Date of Service</th>
+          <th>Confidence</th>
+          <th>Consent</th>
+          <th>Notes</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for r in records %}
+        <tr>
+          <td>{{ r.id }}</td>
+          <td>{{ r.filename }}</td>
+          <td>{{ r.uploaded_at }}</td>
+          <td>{{ r.patient_id }}</td>
+          <td>{{ r.procedure_code }}</td>
+          <td>{{ r.amount_claimed }}</td>
+          <td>{{ r.date_of_service }}</td>
+          <td>{{ r.extraction_confidence }}</td>
+          <td>{{ 'Yes' if r.consent else 'No' }}</td>
+          <td>{{ r.notes }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </body>
+</html>
